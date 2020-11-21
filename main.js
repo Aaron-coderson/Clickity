@@ -43,9 +43,6 @@ class Projectile{
         c.fillStyle = this.color;
         
         c.fill();
-
-
-        console.log('entered')
     }
     update(){
         this.x = this.x+this.velocity.x;
@@ -66,9 +63,7 @@ class Enemy{
         c.arc(this.x, this.y, this.radius, 0, Math.PI*2);
         c.fillStyle = this.color;
         
-        c.fill();
-
-
+        c.fill()
         console.log('entered')
     }
     update(){
@@ -78,7 +73,14 @@ class Enemy{
 }
 function animate(){
     requestAnimationFrame(animate);
-}
+    //c.clearRect(0, 0,canvas.width, canvas.height);
+    player.draw();
+    projectiles.forEach(projectile=>
+    {
+        projectile.draw();
+        projectile.update();   
+    }
+    )}
 
 
 const x  = canvas.width/2;
@@ -86,16 +88,21 @@ const y= canvas.height/2;
 const player = new Player(x,y,30,'red');
 
 player.draw();
+const projectiles = []
 
+window.addEventListener('click', (event ) =>{
 
-window.addEventListener('click', ()=>{
-    const projectile = new Projectile(event.clientX,event.clientY,5,'green',{'x':10, 'y':10})
-    projectile.draw();
-    projectile.update();
-    projectile.draw();
-})
+    const angle  = Math.atan2(event.ClientY-y, event.ClientX-x)
+    const velocity = 
+    {
+        "x":Math.cos(angle),
+        "y":Math.sin(angle)
+    }
+    const projectile = new Projectile(x,y,5,'green',velocity);
+    projectiles.push(projectile);
+    
+}
+)
 
-
-
-
+animate()
 
