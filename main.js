@@ -105,4 +105,3 @@ window.addEventListener('click', (event ) =>{
 )
 
 animate()
-
