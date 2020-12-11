@@ -1,3 +1,18 @@
 body{
     margin: 0;
+    background-image: url('images/abc.jpg');
+    font-family: 'Times New Roman', Times, serif;
 }
+
+.container{
+    width: 90%;
+    height: 100px;
+    background-color: wheat;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 25px;
+
+    text-align: center;
+    outline-style: double;
+    outline-width: 10px;
+    outline-color: yellowgreen;

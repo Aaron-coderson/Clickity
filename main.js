@@ -59,8 +59,15 @@ class Enemy{
     {
         c.beginPath();
         c.arc(this.x, this.y, this.radius, 0, Math.PI*2);
-        c.fillStyle = this.color;
-        c.fill();
+        c.lineWidth = 6;
+        c.strokeStyle = '#ff0000'
+        c.stroke();
+
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+        c.lineWidth = 3;
+        c.strokeStyle = '#aa00ff'
+        c.stroke();
     }
 
     update(){
@@ -77,41 +84,50 @@ function animate(){
         projectile.draw();
         projectile.update();
     })
-
-    /*
-    enemies.forEach(enemy => {
+    enemies.forEach((enemy,index)=>{
         enemy.draw();
         enemy.update();
-
-        projectiles.forEach(projectile =>{
-
-        });
-    });
-    */
+        projectiles.forEach((projectile,projectileIndex)=>{
+            const dist =Math.hypot(projectile.x-enemy.x, projectile.y-enemy.y);
+            if(dist-enemy.radius<10)
+            {
+                console.log('Remove');
+                enemies.splice(index, 1);
+                projectiles.splice(projectileIndex, 1);
+            }
+        })
+    })
 }
+const enemies = []
+function spawnEnemy()
+{
 
-/*const enemies = []
-function spawnEnemy(){
-    setInterval(()=> {
-        const radius  = Math.random()* (30 - 4) + 4;
+    setInterval(()=>{
+    
+        console.log('Enemy')
+        const radius = Math.random()*15+15;
         let ex;
         let ey;
-        if (Math.random() < 0.5){
-            ex = Math.random() < 0.5 ? 0 - radius : canvas.width + radius;
+
+        if (Math.random()<0.5)
+        {
+            ex = Math.random()< 0.5? 0-radius: canvas.width+radius;
             ey = Math.random()*canvas.height;
         }else{
-            ex = Math.random() * canvas.width;
-            ey =  Math.random() < 0.5 ? 0 - radius : canvas.height + radius;
+            ex = Math.random()*canvas.width;
+            ey = Math.random()< 0.5? 0-radius: canvas.height+radius;   
         }
-        const color = 'purple';
+    
+      
+        const color = 'blue';
         const angle = Math.atan2(y - ey, x - ex);
         const velocity = {
-            "x": Math.cos(angle),
-            "y": Math.sin(angle)
-        }
-        enemies.push(new Enemy(ex, ey, radius, color, velocity));
-    }, 1000)
-}*/
+        "x": Math.cos(angle),
+        "y": Math.sin(angle)
+    }
+        enemies.push(new Enemy(ex,ey,radius,color,velocity))
+    },1000)
+}
 
 //define player instances
 const x  = canvas.width/2;
@@ -132,4 +148,4 @@ window.addEventListener('click', (event) =>{
 })
 
 animate();
-//spawnEnemy();
+spawnEnemy();
